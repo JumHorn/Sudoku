@@ -20,6 +20,8 @@ class Sudoku
 {
 private:
 	Grid grid[9][9];
+	void initzero(int row,int column,int number);
+	int choosing(int row,int column);
 public:
 	Sudoku();
 	~Sudoku();
