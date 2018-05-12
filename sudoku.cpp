@@ -100,6 +100,7 @@ void Sudoku::print()
 		}
 		cout<<endl;
 	}
+	cout<<endl;
 }
 
 //when the right number is not zero
