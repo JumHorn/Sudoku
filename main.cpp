@@ -6,9 +6,9 @@ int main()
 {
 	Sudoku s;
 
-	s.init("sudoku.txt");
-	s.print();
-	
+	s.setContent("sudoku.txt");
+	cout<<s;
+
 	char c='\n';
 	int result;
 	while(c=='\n')
@@ -23,5 +23,5 @@ int main()
 		c=getchar();
 	}
 
-	s.output();
+	s.flushContent("result.txt");
 }

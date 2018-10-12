@@ -16,7 +16,7 @@ Sudoku::~Sudoku()
 
 //read from a file which stores the numbers in it
 //9x9 and the unknows correspond to 0
-bool Sudoku::init(const string& content)
+bool Sudoku::setContent(const string& content)
 {
 	ifstream fin(content);
 	if (!fin)
@@ -60,9 +60,9 @@ int Sudoku::calculate()
 }
 
 //save the result to file
-bool Sudoku::output()
+bool Sudoku::flushContent(const string& path)
 {
-	ofstream fout("result.txt");
+	ofstream fout(path);
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 9; j++)

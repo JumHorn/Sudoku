@@ -28,9 +28,9 @@ private:
 public:
 	Sudoku();
 	~Sudoku();
-	bool init(const string& content);
+	bool setContent(const string& content);
 	int calculate();
-	bool output();
+	bool flushContent(const string& path);
 	friend ostream& operator<<(ostream& os,Sudoku& s);
 };
 
