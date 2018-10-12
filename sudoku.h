@@ -31,7 +31,6 @@ public:
 	bool init(const string& content);
 	int calculate();
 	bool output();
-	void print();
 	friend ostream& operator<<(ostream& os,Sudoku& s);
 };
 

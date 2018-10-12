@@ -74,20 +74,6 @@ bool Sudoku::output()
 	return true;
 }
 
-//print the result to the screen
-void Sudoku::print()
-{
-	for (int i = 0; i < 9; i++)
-	{
-		for (int j = 0; j < 9; j++)
-		{
-			cout << grid[i][j].rightnum << " ";
-		}
-		cout << endl;
-	}
-	cout << endl;
-}
-
 //when the right number is not zero
 //get rid of other possible numbers
 void Sudoku::initzero(int row, int column, int number)
@@ -265,6 +251,7 @@ int Sudoku::choosing(int row, int column)
 	return 1;
 }
 
+//print the result to the screen
 ostream& operator<<(ostream& os,Sudoku& s)
 {
 	for (int i = 0; i < 9; i++)

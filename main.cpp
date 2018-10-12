@@ -14,12 +14,11 @@ int main()
 	while(c=='\n')
 	{
 		result=s.calculate();
+		cout<<s;
 		if(result==0)
 		{
-			s.print();
 			break;
 		}
-		s.print();
 		cout<<result<<endl;
 		c=getchar();
 	}
