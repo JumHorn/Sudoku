@@ -6,7 +6,7 @@ int main()
 {
 	Sudoku s;
 
-	s.init();
+	s.init("sudoku.txt");
 	s.print();
 	
 	char c='\n';

@@ -1,5 +1,7 @@
 #ifndef _SUDOKU_H_
 #define _SUDOKU_H_
+#include<string>
+using namespace std;
 
 //if the number not sure, filled with 0
 //if the rightnum is 0,it means not sure what exactly it is
@@ -26,10 +28,11 @@ private:
 public:
 	Sudoku();
 	~Sudoku();
-	bool init();
+	bool init(const string& content);
 	int calculate();
 	bool output();
 	void print();
+	friend ostream& operator<<(ostream& os,Sudoku& s);
 };
 
 #endif

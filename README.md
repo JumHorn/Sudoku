@@ -1,9 +1,9 @@
 # Introdution
-这是一个处理数独问题的程序   
+this program is designed to solve sudoku problems   
 
 # Usage
+the sudoku file format must be like this   
 
-将数独问题放在程序运行目录下的txt文件里,格式如下   
 020700000   
 397105408   
 100093705   
@@ -14,5 +14,9 @@
 900672003   
 060019200   
 
-0表示未知的数字   
-运行编译好的程序,每次按下回车键,直到全部数字计算完成
+the 0 stand for the unknown number   
+run file program in the shell 
+the normal way to calculate the result step by step util the result come out
+
+V1.0
+* there are still some problems can not be solved.an example is show above

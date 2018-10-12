@@ -16,9 +16,9 @@ Sudoku::~Sudoku()
 
 //read from a file which stores the numbers in it
 //9x9 and the unknows correspond to 0
-bool Sudoku::init()
+bool Sudoku::init(const string& content)
 {
-	ifstream fin("sudoku.txt");
+	ifstream fin(content);
 	if (!fin)
 	{
 		return false;
@@ -107,6 +107,10 @@ void Sudoku::initzero(int row, int column, int number)
 			grid[i][j].possiblenum[number - 1] = 0;
 		}
 	}
+	for(int i=0;i<9;i++)
+    {
+        grid[row][column].possiblenum[i]=0;
+    }
 }
 
 //for the first time init zero of all grid
@@ -259,4 +263,18 @@ int Sudoku::choosing(int row, int column)
 	}
 
 	return 1;
+}
+
+ostream& operator<<(ostream& os,Sudoku& s)
+{
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			os << s.grid[i][j].rightnum << " ";
+		}
+		os << endl;
+	}
+	os << endl;
+	return os;
 }
