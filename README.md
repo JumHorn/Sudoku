@@ -40,12 +40,12 @@ run file program in the shell
 the normal way to calculate the result step by step util the result come out
 
 # Technique
-1. using bit monipulation to simplify the procedure to find the right number
+1. using bit monipulation to simplify the procedure to find the right number   
 as the possible number can be simulated with the position of bit
 only need 2^9(short is enough but I still use int) can store all the possible conditions.all the operations can convert to bit count and & and ^ operations
 these operations are much faster.
 
-2. add a new method to try to guess the possible number
+2. add a new method to try to guess the possible number   
 try to minimumize the scope of guess with all number solved on rule 1 above
 
 # Versions
