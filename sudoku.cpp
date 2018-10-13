@@ -3,12 +3,9 @@
 #include<fstream>
 using namespace std;
 
-
-
 Sudoku::Sudoku()
 {
 }
-
 
 Sudoku::~Sudoku()
 {
@@ -29,7 +26,7 @@ bool Sudoku::setContent(const string& content)
 		for (int j = 0; j < 9; j++)
 		{
 			fin >> c;
-			grid[i][j].rightnum = c - '0';
+			grid[i][j].rightnum = c;
 		}
 	}
 
@@ -50,7 +47,7 @@ int Sudoku::calculate()
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			if (grid[i][j].rightnum == 0)
+			if (grid[i][j].rightnum == '0')
 			{
 				result += choosing(i, j);
 			}
@@ -80,22 +77,22 @@ void Sudoku::initzero(int row, int column, int number)
 {
 	for (int i = 0; i < 9; i++)
 	{
-		grid[row][i].possiblenum[number - 1] = 0;
+		grid[row][i].possiblenum[number - 1] = '0';
 	}
 	for (int i = 0; i < 9; i++)
 	{
-		grid[i][column].possiblenum[number - 1] = 0;
+		grid[i][column].possiblenum[number - 1] = '0';
 	}
 	for (int i = row / 3 * 3; i < 3 + row / 3 * 3; i++)
 	{
 		for (int j = column / 3 * 3; j < 3 + column / 3 * 3; j++)
 		{
-			grid[i][j].possiblenum[number - 1] = 0;
+			grid[i][j].possiblenum[number - 1] = '0';
 		}
 	}
 	for(int i=0;i<9;i++)
     {
-        grid[row][column].possiblenum[i]=0;
+        grid[row][column].possiblenum[i]='0';
     }
 }
 
@@ -108,13 +105,12 @@ int Sudoku::fullinitzero()
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			if (grid[i][j].rightnum == 0)
+			if (grid[i][j].rightnum == '0')
 			{
 				result++;
 			}
 			else
 			{
-				memset(grid[i][j].possiblenum, 0, sizeof(grid[i][j].possiblenum));
 				initzero(i, j, grid[i][j].rightnum);
 			}
 		}
@@ -131,7 +127,7 @@ int Sudoku::choosing(int row, int column)
 	int index = 0, flag = 0;
 	for (int i = 0; i < 9; i++)
 	{
-		if (grid[row][column].possiblenum[i] != 0)
+		if (grid[row][column].possiblenum[i] != '0')
 		{
 			index = i;
 			flag++;
@@ -152,7 +148,7 @@ int Sudoku::choosing(int row, int column)
 	//check others
 	for (int i = 0; i < 9; i++)
 	{
-		if (grid[row][column].possiblenum[i] != 0)
+		if (grid[row][column].possiblenum[i] != '0')
 		{
 			int j;
 			for (j = 0; j < 9; j++)
@@ -160,7 +156,7 @@ int Sudoku::choosing(int row, int column)
 				int k;
 				for (k = 0; k < 9; k++)
 				{
-					if (j != column&&grid[row][j].possiblenum[k] == i + 1)
+					if (j != column&&grid[row][j].possiblenum[k] == i + '1')
 					{
 						break;
 					}
@@ -173,8 +169,8 @@ int Sudoku::choosing(int row, int column)
 			if (j == 9)
 			{
 				//row check
-				grid[row][column].rightnum = i + 1;
-				initzero(row, column, i + 1);
+				grid[row][column].rightnum = i + '1';
+				initzero(row, column, i + '1');
 				return 0;
 			}
 		}
@@ -182,7 +178,7 @@ int Sudoku::choosing(int row, int column)
 
 	for (int i = 0; i < 9; i++)
 	{
-		if (grid[row][column].possiblenum[i] != 0)
+		if (grid[row][column].possiblenum[i] != '0')
 		{
 			int j;
 			for (j = 0; j < 9; j++)
@@ -190,7 +186,7 @@ int Sudoku::choosing(int row, int column)
 				int k;
 				for (k = 0; k < 9; k++)
 				{
-					if (j != row&&grid[j][column].possiblenum[k] == i + 1)
+					if (j != row&&grid[j][column].possiblenum[k] == i + '1')
 					{
 						break;
 					}
@@ -203,8 +199,8 @@ int Sudoku::choosing(int row, int column)
 			if (j == 9)
 			{
 				//column check
-				grid[row][column].rightnum = i + 1;
-				initzero(row, column, i + 1);
+				grid[row][column].rightnum = i + '1';
+				initzero(row, column, i + '1');
 				return 0;
 			}
 		}
@@ -212,7 +208,7 @@ int Sudoku::choosing(int row, int column)
 
 	for (int l = 0; l < 9; l++)
 	{
-		if (grid[row][column].possiblenum[l] != 0)
+		if (grid[row][column].possiblenum[l] != '0')
 		{
 			int i;
 			for (i = row / 3 * 3; i < 3 + row / 3 * 3; i++)
@@ -223,7 +219,7 @@ int Sudoku::choosing(int row, int column)
 					int k;
 					for (k = 0; k < 9; k++)
 					{
-						if ((i != row || j != column) && grid[i][j].possiblenum[k] == l + 1)
+						if ((i != row || j != column) && grid[i][j].possiblenum[k] == l + '1')
 						{
 							break;
 						}
@@ -241,8 +237,8 @@ int Sudoku::choosing(int row, int column)
 			if (i == 3 + row / 3 * 3)
 			{
 				//grid check
-				grid[row][column].rightnum = l + 1;
-				initzero(row, column, l + 1);
+				grid[row][column].rightnum = l + '1';
+				initzero(row, column, l + '1');
 				return 0;
 			}
 		}

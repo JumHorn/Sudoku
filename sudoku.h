@@ -7,30 +7,34 @@ using namespace std;
 //if the rightnum is 0,it means not sure what exactly it is
 struct Grid
 {
-	int rightnum;		  //the correct number
-	int possiblenum[9];   //the possible number
-	Grid() : rightnum(0)
+	char rightnum;		  //the correct number
+	char possiblenum[9];   //the possible number
+	Grid() : rightnum('0')
 	{
 		for (int i = 0; i < 9; i++)
 		{
-			possiblenum[i] = i + 1;
+			possiblenum[i] = i + '0';
 		}
 	}
 };
 
 class Sudoku
 {
-private:
-	Grid grid[9][9];
-	void initzero(int row,int column,int number);
-	int fullinitzero();
-	int choosing(int row,int column);
 public:
 	Sudoku();
 	~Sudoku();
-	bool setContent(const string& content);
+
 	int calculate();
+	bool setContent(const string& content);
 	bool flushContent(const string& path);
+
+private:
+	Grid grid[9][9];
+
+	void initzero(int row,int column,int number);
+	int fullinitzero();
+	int choosing(int row,int column);
+
 	friend ostream& operator<<(ostream& os,Sudoku& s);
 };
 

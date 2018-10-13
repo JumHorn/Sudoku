@@ -18,5 +18,10 @@ the 0 stand for the unknown number
 run file program in the shell 
 the normal way to calculate the result step by step util the result come out
 
+# tech
+1. using bit monipulation to simplify the procedure to find the right number
+2. add a new method to try to guess the possible number
+
 V1.0
-* there are still some problems can not be solved.an example is show above
+* an example showing above 
+there are some kind of problems can not be solved with only directly find the answer based on the principles
