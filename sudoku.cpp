@@ -111,7 +111,7 @@ int Sudoku::fullinitzero()
 			}
 			else
 			{
-				initzero(i, j, grid[i][j].rightnum);
+				initzero(i, j, grid[i][j].rightnum-'0');
 			}
 		}
 	}
@@ -140,7 +140,7 @@ int Sudoku::choosing(int row, int column)
 	if (flag == 1)
 	{
 		//self check
-		grid[row][column].rightnum = index + 1;
+		grid[row][column].rightnum = index + 1+'0';
 		initzero(row, column, index + 1);
 		return 0;
 	}
@@ -156,7 +156,7 @@ int Sudoku::choosing(int row, int column)
 				int k;
 				for (k = 0; k < 9; k++)
 				{
-					if (j != column&&grid[row][j].possiblenum[k] == i + '1')
+					if (j != column&&grid[row][j].possiblenum[k] == i + 1+'0')
 					{
 						break;
 					}
@@ -169,8 +169,8 @@ int Sudoku::choosing(int row, int column)
 			if (j == 9)
 			{
 				//row check
-				grid[row][column].rightnum = i + '1';
-				initzero(row, column, i + '1');
+				grid[row][column].rightnum = i + 1+'0';
+				initzero(row, column, i + 1);
 				return 0;
 			}
 		}
@@ -186,7 +186,7 @@ int Sudoku::choosing(int row, int column)
 				int k;
 				for (k = 0; k < 9; k++)
 				{
-					if (j != row&&grid[j][column].possiblenum[k] == i + '1')
+					if (j != row&&grid[j][column].possiblenum[k] == i + 1+'0')
 					{
 						break;
 					}
@@ -199,8 +199,8 @@ int Sudoku::choosing(int row, int column)
 			if (j == 9)
 			{
 				//column check
-				grid[row][column].rightnum = i + '1';
-				initzero(row, column, i + '1');
+				grid[row][column].rightnum = i + 1+'0';
+				initzero(row, column, i + 1);
 				return 0;
 			}
 		}
@@ -219,7 +219,7 @@ int Sudoku::choosing(int row, int column)
 					int k;
 					for (k = 0; k < 9; k++)
 					{
-						if ((i != row || j != column) && grid[i][j].possiblenum[k] == l + '1')
+						if ((i != row || j != column) && grid[i][j].possiblenum[k] == l + 1+'0')
 						{
 							break;
 						}
@@ -237,8 +237,8 @@ int Sudoku::choosing(int row, int column)
 			if (i == 3 + row / 3 * 3)
 			{
 				//grid check
-				grid[row][column].rightnum = l + '1';
-				initzero(row, column, l + '1');
+				grid[row][column].rightnum = l + 1+'0';
+				initzero(row, column, l + 1);
 				return 0;
 			}
 		}

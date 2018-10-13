@@ -13,7 +13,7 @@ struct Grid
 	{
 		for (int i = 0; i < 9; i++)
 		{
-			possiblenum[i] = i + '0';
+			possiblenum[i] = "123456789"[i];
 		}
 	}
 };
