@@ -10,7 +10,8 @@ The algorithm:
 First, go through every empty cell and find its possible values (by looking at the square, row and column it's in), store this list of possible values as the cells value   
 Whenever a cell's list of possible values gets reduced to a single value, fill in this value and update all the other unfilled cells in the same square, row and column   
 Next go through every square, row and column and look for groups of possible values which are the same. If any of these groups have the same size as their amount of possible values, remove them from all other possible value arrays in the square/row/column.   
-e.g. if a row contains three unfilled cells with possible values (1, 2), (1, 2), (1, 3), the third cell can be reduced to (3) and thus filled in. The reason for this is that since the first two cells must collectively hold values 1 & 2, it's impossible for the third to cell to have value 1, so it's only possible value is 3.   
+> e.g. if a row contains three unfilled cells with possible values (1, 2), (1, 2), (1, 3), the third cell can be reduced to (3) and thus filled in. The reason for this is that since the first two cells must collectively hold values 1 & 2, it's impossible for the third to cell to have value 1, so it's only possible value is 3.
+   
 Keep repeating this last process until all possible reductions have been made
 If the board still isn't filled, we now need to make a guess, choose your guess as follows:   
 find a group of size two (e.g. if a row has unfilled values (1, 3), (1, 3) then pick one of these cells to guess)   
