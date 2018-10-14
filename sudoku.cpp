@@ -27,6 +27,9 @@ using namespace std;
 
 Sudoku::Sudoku()
 {
+	for(int i=0;i<9;i++)
+		for(int j=0;j<9;j++)
+			bit[i][j]=(1<<9)-1;
 }
 
 Sudoku::~Sudoku()
@@ -48,11 +51,12 @@ bool Sudoku::setContent(const string& content)
 		for (int j = 0; j < 9; j++)
 		{
 			fin >> c;
-			grid[i][j].rightnum = c;
+			if(c!='0')
+				bit[i][j] = 1<<(c-'0');
 		}
 	}
 
-	fullinitzero();
+	numberCount();
 
 	return true;
 }
@@ -63,15 +67,14 @@ bool Sudoku::setContent(const string& content)
 int Sudoku::calculate()
 {
 	int result = 0;
-
-	//for choosing
+	//for choose
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			if (grid[i][j].rightnum == '0')
+			if (bitCount(bit[i][j]) != 1)
 			{
-				result += choosing(i, j);
+				result += choose(i, j);
 			}
 		}
 	}
@@ -86,7 +89,7 @@ bool Sudoku::flushContent(const string& path)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			fout << grid[i][j].rightnum << " ";
+			fout << bit[i][j] << " ";
 		}
 		fout << endl;
 	}
@@ -95,61 +98,47 @@ bool Sudoku::flushContent(const string& path)
 
 //when the right number is not zero
 //get rid of other possible numbers
-void Sudoku::initzero(int row, int column, int number)
+void Sudoku::zeroBit(int row, int column, int number)
 {
 	for (int i = 0; i < 9; i++)
 	{
-		grid[row][i].possiblenum[number - 1] = '0';
+		bit[row][i] &= ~number;
+		bit[i][column] &= ~number;
+		bit[row-row%3+i/3][column-column%3+i%3] &= ~number;
 	}
-	for (int i = 0; i < 9; i++)
-	{
-		grid[i][column].possiblenum[number - 1] = '0';
-	}
-	for (int i = row / 3 * 3; i < 3 + row / 3 * 3; i++)
-	{
-		for (int j = column / 3 * 3; j < 3 + column / 3 * 3; j++)
-		{
-			grid[i][j].possiblenum[number - 1] = '0';
-		}
-	}
-	for(int i=0;i<9;i++)
-    {
-        grid[row][column].possiblenum[i]='0';
-    }
 }
 
-//for the first time init zero of all grid
-int Sudoku::fullinitzero()
+//count all the unsure number in sudoku
+int Sudoku::numberCount()
 {
 	int result = 0;
-	//for zero initialization
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			if (grid[i][j].rightnum == '0')
+			if (bitCount(bit[i][j]) != 1)
 			{
 				result++;
 			}
 			else
 			{
-				initzero(i, j, grid[i][j].rightnum-'0');
+				//for zero initialization
+				zeroBit(i, j, bit[i][j]);
 			}
 		}
 	}
-
 	return result;
 }
 
 //if choosed one,return 0
 //otherwize 1 should be returned
-int Sudoku::choosing(int row, int column)
+int Sudoku::choose(int row, int column)
 {
 	//check self
 	int index = 0, flag = 0;
 	for (int i = 0; i < 9; i++)
 	{
-		if (grid[row][column].possiblenum[i] != '0')
+		if (bit[row][column][i] != '0')
 		{
 			index = i;
 			flag++;
@@ -162,15 +151,15 @@ int Sudoku::choosing(int row, int column)
 	if (flag == 1)
 	{
 		//self check
-		grid[row][column].rightnum = index + 1+'0';
-		initzero(row, column, index + 1);
+		bit[row][column] = index + 1+'0';
+		zeroBit(row, column, index + 1);
 		return 0;
 	}
 
 	//check others
 	for (int i = 0; i < 9; i++)
 	{
-		if (grid[row][column].possiblenum[i] != '0')
+		if (bit[row][column][i] != '0')
 		{
 			int j;
 			for (j = 0; j < 9; j++)
@@ -178,7 +167,7 @@ int Sudoku::choosing(int row, int column)
 				int k;
 				for (k = 0; k < 9; k++)
 				{
-					if (j != column&&grid[row][j].possiblenum[k] == i + 1+'0')
+					if (j != column&&bit[row][j][k] == i + 1+'0')
 					{
 						break;
 					}
@@ -191,8 +180,8 @@ int Sudoku::choosing(int row, int column)
 			if (j == 9)
 			{
 				//row check
-				grid[row][column].rightnum = i + 1+'0';
-				initzero(row, column, i + 1);
+				bit[row][column] = i + 1+'0';
+				zeroBit(row, column, i + 1);
 				return 0;
 			}
 		}
@@ -200,7 +189,7 @@ int Sudoku::choosing(int row, int column)
 
 	for (int i = 0; i < 9; i++)
 	{
-		if (grid[row][column].possiblenum[i] != '0')
+		if (bit[row][column][i] != '0')
 		{
 			int j;
 			for (j = 0; j < 9; j++)
@@ -208,7 +197,7 @@ int Sudoku::choosing(int row, int column)
 				int k;
 				for (k = 0; k < 9; k++)
 				{
-					if (j != row&&grid[j][column].possiblenum[k] == i + 1+'0')
+					if (j != row&&bit[j][column][k] == i + 1+'0')
 					{
 						break;
 					}
@@ -221,8 +210,8 @@ int Sudoku::choosing(int row, int column)
 			if (j == 9)
 			{
 				//column check
-				grid[row][column].rightnum = i + 1+'0';
-				initzero(row, column, i + 1);
+				bit[row][column] = i + 1+'0';
+				zeroBit(row, column, i + 1);
 				return 0;
 			}
 		}
@@ -230,7 +219,7 @@ int Sudoku::choosing(int row, int column)
 
 	for (int l = 0; l < 9; l++)
 	{
-		if (grid[row][column].possiblenum[l] != '0')
+		if (bit[row][column][l] != '0')
 		{
 			int i;
 			for (i = row / 3 * 3; i < 3 + row / 3 * 3; i++)
@@ -241,7 +230,7 @@ int Sudoku::choosing(int row, int column)
 					int k;
 					for (k = 0; k < 9; k++)
 					{
-						if ((i != row || j != column) && grid[i][j].possiblenum[k] == l + 1+'0')
+						if ((i != row || j != column) && bit[i][j][k] == l + 1+'0')
 						{
 							break;
 						}
@@ -258,9 +247,9 @@ int Sudoku::choosing(int row, int column)
 			}
 			if (i == 3 + row / 3 * 3)
 			{
-				//grid check
-				grid[row][column].rightnum = l + 1+'0';
-				initzero(row, column, l + 1);
+				//bit check
+				bit[row][column] = l + 1+'0';
+				zeroBit(row, column, l + 1);
 				return 0;
 			}
 		}
@@ -268,6 +257,18 @@ int Sudoku::choosing(int row, int column)
 
 	return 1;
 }
+
+//this bit count solution is from java 
+//the difference is that java count 32bit integer 
+//and we only care about 9 bit integer
+int Sudoku::bitCount(int x)
+{
+	x=x-((x>>1)&0x555);
+	x=x+((x>>2)&0x333);
+	x=x+((x>>4)&0xf0f);
+	return x&0xf;
+}
+
 //add new method to guess the number
 void Sudoku::guess()
 {
@@ -280,17 +281,17 @@ bool Sudoku::guess(int i,int j)
 		return true;
 	if(j==9)
 		return guess(i+1,0);
-	if(grid[i][j].rightnum!='0')
+	if(bit[i][j]!='0')
 		return guess(i,j+1);
 
 	for(char c='1';c<='9';c++)
 	{
 		if(guessCheck(i,j,c))
 		{
-			grid[i][j].rightnum=c;
+			bit[i][j]=c;
 			if(guess(i,j+1))
 				return true;
-			grid[i][j].rightnum='0';
+			bit[i][j]='0';
 		}
 	}
 	return false;
@@ -300,9 +301,9 @@ bool Sudoku::guessCheck(int i,int j,char val)
 {
 	for(int m=0;m<9;m++)
 	{
-		if(grid[i][m].rightnum==val)return false;
-		if(grid[m][j].rightnum==val)return false;
-		if(grid[i-i%3+m/3][j-j%3+m%3].rightnum==val)return false;
+		if(bit[i][m]==val)return false;
+		if(bit[m][j]==val)return false;
+		if(bit[i-i%3+m/3][j-j%3+m%3]==val)return false;
 	}
 	return true;
 }
@@ -314,7 +315,7 @@ ostream& operator<<(ostream& os,Sudoku& s)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			os << s.grid[i][j].rightnum << " ";
+			os << s.bit[i][j] << " ";
 		}
 		os << endl;
 	}

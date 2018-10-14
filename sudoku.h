@@ -25,21 +25,9 @@ SOFTWARE.
 #include<string>
 using namespace std;
 
-//if the number not sure, filled with 0
+//all the number was 1 bit in the right and possible number
+//if the number not sure, filled with 2^9-1 all possible bit are 1
 //if the rightnum is 0,it means not sure what exactly it is
-struct Grid
-{
-	char rightnum;		  //the correct number
-	char possiblenum[9];   //the possible number
-	Grid() : rightnum('0')
-	{
-		for (int i = 0; i < 9; i++)
-		{
-			possiblenum[i] = "123456789"[i];
-		}
-	}
-};
-
 class Sudoku
 {
 public:
@@ -52,13 +40,14 @@ public:
 	bool flushContent(const string& path);
 
 private:
-	Grid grid[9][9];
+	int bit[9][9];
 
 	bool guess(int i,int j);
 	bool guessCheck(int i,int j,char val);
-	void initzero(int row,int column,int number);
-	int fullinitzero();
-	int choosing(int row,int column);
+	void zeroBit(int row,int column,int number);
+	int bitCount(int x);
+	int numberCount();
+	int choose(int row,int column);
 
 	friend ostream& operator<<(ostream& os,Sudoku& s);
 };
