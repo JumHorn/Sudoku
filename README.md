@@ -56,28 +56,25 @@ these operations are much faster.
 2. add a new method to try to guess the possible number   
 try to minimumize the scope of guess with all number solved on rule 1 above   
 the most elegant guess solution I have found on leetcode
+[link](https://leetcode.com/problems/sudoku-solver/discuss/15853/Simple-and-Clean-Solution-C++)
 ```C++
 class Solution{
 private:
     bool check(vector<vector<char> > &board, int i, int j, char val)
     {
-        int row = i - i%3, column = j - j%3;
-        for(int x=0; x<9; x++) if(board[x][j] == val) return false;
-        for(int y=0; y<9; y++) if(board[i][y] == val) return false;
-        
-        for(int x=0; x<3; x++)
-        for(int y=0; y<3; y++)
-            if(board[row+x][column+y] == val) return false;
-        
+        for(int h=0;h<9;h++)
+        {
+            if(board[i][h]==val) return false; /* check row */
+            if(board[h][j]==val) return false; /* check col */
+            if(board[i-i%3+h/3][j-j%3+h%3]==val)return false; /* check cube */
+        } 
         return true;
     }
     
     bool solveSudoku(vector<vector<char>> &board, int i, int j)
     {
         if(i==9) return true;
-        
-        if(j==9) return solveSudoku(board, i+1, 0);
-        
+        if(j==9) return solveSudoku(board, i+1, 0);  
         if(board[i][j] != '.') return solveSudoku(board, i, j+1);
 
         for(char c='1'; c<='9'; c++)
