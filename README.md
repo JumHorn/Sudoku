@@ -99,6 +99,10 @@ public:
 ```
 
 # Versions
+V1.1
+* add guess to successfully solve variaty of conditions   
+and the the step next the the above algoritm has not been implemented
+
 V1.0
 * an example showing above 
 there are some kind of problems can not be solved with only directly find the answer based on the principles
