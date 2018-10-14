@@ -49,6 +49,8 @@ int main()
 	if(result!=0)
 	{
 		//using assumption
+		s.guess();
+		cout<<s;
 	}
 	s.flushContent("result.txt");
 

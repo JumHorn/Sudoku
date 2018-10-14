@@ -268,6 +268,44 @@ int Sudoku::choosing(int row, int column)
 
 	return 1;
 }
+//add new method to guess the number
+void Sudoku::guess()
+{
+	guess(0,0);
+}
+
+bool Sudoku::guess(int i,int j)
+{
+	if(i==9)
+		return true;
+	if(j==9)
+		return guess(i+1,0);
+	if(grid[i][j].rightnum!='0')
+		return guess(i,j+1);
+
+	for(char c='1';c<='9';c++)
+	{
+		if(guessCheck(i,j,c))
+		{
+			grid[i][j].rightnum=c;
+			if(guess(i,j+1))
+				return true;
+			grid[i][j].rightnum='0';
+		}
+	}
+	return false;
+}
+
+bool Sudoku::guessCheck(int i,int j,char val)
+{
+	for(int m=0;m<9;m++)
+	{
+		if(grid[i][m].rightnum==val)return false;
+		if(grid[m][j].rightnum==val)return false;
+		if(grid[i-i%3+m/3][j-j%3+m%3].rightnum==val)return false;
+	}
+	return true;
+}
 
 //print the result to the screen
 ostream& operator<<(ostream& os,Sudoku& s)

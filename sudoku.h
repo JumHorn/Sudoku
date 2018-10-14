@@ -47,12 +47,15 @@ public:
 	~Sudoku();
 
 	int calculate();
+	void guess();
 	bool setContent(const string& content);
 	bool flushContent(const string& path);
 
 private:
 	Grid grid[9][9];
 
+	bool guess(int i,int j);
+	bool guessCheck(int i,int j,char val);
 	void initzero(int row,int column,int number);
 	int fullinitzero();
 	int choosing(int row,int column);
