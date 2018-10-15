@@ -138,105 +138,49 @@ int Sudoku::numberCount()
 //otherwize 1 should be returned
 int Sudoku::choose(int row, int column)
 {
-	//check row
 	for (int i = 0; i < 9; i++)
 	{
-		if (bit[row][column] != 0)
+		if((bit[row][column]&(1<<i))==1)
 		{
-			int j;
-			for (j = 0; j < 9; j++)
+			//check row
+			int sum=0;
+			for(int j=0;j<9;j++)
 			{
-				int k;
-				for (k = 0; k < 9; k++)
-				{
-					if (j != column&&bit[row][j][k] == i + 1+'0')
-					{
-						break;
-					}
-				}
-				if (k != 9)
-				{
-					break;
-				}
+				sum+=(bit[j][column]&(1<<i))>>i;
 			}
-			if (j == 9)
+			if(sum==1)
 			{
-				//row check
-				bit[row][column] = i + 1+'0';
-				zeroBit(row, column, i + 1);
+				zeroBit(row,column,bit[row][column]);
 				return 0;
 			}
-		}
-	}
-	//check column
-	for (int i = 0; i < 9; i++)
-	{
-		if (bit[row][column][i] != '0')
-		{
-			int j;
-			for (j = 0; j < 9; j++)
-			{
-				int k;
-				for (k = 0; k < 9; k++)
-				{
-					if (j != row&&bit[j][column][k] == i + 1+'0')
-					{
-						break;
-					}
-				}
-				if (k != 9)
-				{
-					break;
-				}
-			}
-			if (j == 9)
-			{
-				//column check
-				bit[row][column] = i + 1+'0';
-				zeroBit(row, column, i + 1);
-				return 0;
-			}
-		}
-	}
-	//check cube
-	for (int l = 0; l < 9; l++)
-	{
-		if (bit[row][column][l] != '0')
-		{
-			int i;
-			for (i = row / 3 * 3; i < 3 + row / 3 * 3; i++)
-			{
-				int j;
-				for (j = column / 3 * 3; j < 3 + column / 3 * 3; j++)
-				{
-					int k;
-					for (k = 0; k < 9; k++)
-					{
-						if ((i != row || j != column) && bit[i][j][k] == l + 1+'0')
-						{
-							break;
-						}
-					}
-					if (k != 9)
-					{
-						break;
-					}
-				}
-				if (j != 3 + column / 3 * 3)
-				{
-					break;
-				}
-			}
-			if (i == 3 + row / 3 * 3)
-			{
-				//bit check
-				bit[row][column] = l + 1+'0';
-				zeroBit(row, column, l + 1);
-				return 0;
-			}
-		}
-	}
 
+			//check column
+			sum=0;
+			for(int j=0;j<9;j++)
+			{
+				sum+=(bit[row][j]&(1<<i))>>i;
+			}
+			if(sum==1)
+			{
+				zeroBit(row,column,bit[row][column]);
+				return 0;
+			}
+
+			//check cube
+			sum=0;
+			for(int j=0;j<9;j++)
+			{
+				sum+=(bit[row-row%3+j/3][column-column%3+j%3]&(1<<i))>>i;
+			}
+			if(sum==1)
+			{
+				zeroBit(row,column,bit[row][column]);
+				return 0;
+			}
+		}
+	}
+	//init algorithm's next condition
+	//
 	return 1;
 }
 
