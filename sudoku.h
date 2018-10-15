@@ -43,7 +43,7 @@ private:
 	int bit[9][9];
 
 	bool guess(int i,int j);
-	bool guessCheck(int i,int j,char val);
+	bool guessCheck(int i,int j,int val);
 	void zeroBit(int row,int column,int number);
 	int bitCount(int x);
 	int numberCount();

@@ -76,6 +76,10 @@ int Sudoku::calculate()
 			{
 				result += choose(i, j);
 			}
+			else
+			{
+				zeroBit(i,j,bit[i][j]);
+			}
 		}
 	}
 	return result;
@@ -89,7 +93,7 @@ bool Sudoku::flushContent(const string& path)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			fout << bit[i][j] << " ";
+			fout << bitCount(bit[i][j]-1)+1 << " ";
 		}
 		fout << endl;
 	}
@@ -134,32 +138,10 @@ int Sudoku::numberCount()
 //otherwize 1 should be returned
 int Sudoku::choose(int row, int column)
 {
-	//check self
-	int index = 0, flag = 0;
+	//check row
 	for (int i = 0; i < 9; i++)
 	{
-		if (bit[row][column][i] != '0')
-		{
-			index = i;
-			flag++;
-			if (flag > 1)
-			{
-				break;
-			}
-		}
-	}
-	if (flag == 1)
-	{
-		//self check
-		bit[row][column] = index + 1+'0';
-		zeroBit(row, column, index + 1);
-		return 0;
-	}
-
-	//check others
-	for (int i = 0; i < 9; i++)
-	{
-		if (bit[row][column][i] != '0')
+		if (bit[row][column] != 0)
 		{
 			int j;
 			for (j = 0; j < 9; j++)
@@ -186,7 +168,7 @@ int Sudoku::choose(int row, int column)
 			}
 		}
 	}
-
+	//check column
 	for (int i = 0; i < 9; i++)
 	{
 		if (bit[row][column][i] != '0')
@@ -216,7 +198,7 @@ int Sudoku::choose(int row, int column)
 			}
 		}
 	}
-
+	//check cube
 	for (int l = 0; l < 9; l++)
 	{
 		if (bit[row][column][l] != '0')
@@ -281,23 +263,24 @@ bool Sudoku::guess(int i,int j)
 		return true;
 	if(j==9)
 		return guess(i+1,0);
-	if(bit[i][j]!='0')
+	if(bitCount(bit[i][j])==1)
 		return guess(i,j+1);
 
-	for(char c='1';c<='9';c++)
+	bit[i][j]=0;
+	for(int c=0;c<9;c++)
 	{
-		if(guessCheck(i,j,c))
+		if(guessCheck(i,j,1<<c))
 		{
-			bit[i][j]=c;
+			bit[i][j]=(1<<c);
 			if(guess(i,j+1))
 				return true;
-			bit[i][j]='0';
+			bit[i][j]=0;
 		}
 	}
 	return false;
 }
 
-bool Sudoku::guessCheck(int i,int j,char val)
+bool Sudoku::guessCheck(int i,int j,int val)
 {
 	for(int m=0;m<9;m++)
 	{
@@ -315,7 +298,7 @@ ostream& operator<<(ostream& os,Sudoku& s)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			os << s.bit[i][j] << " ";
+			os << s.bitCount(s.bit[i][j]-1)+1 << " ";
 		}
 		os << endl;
 	}
