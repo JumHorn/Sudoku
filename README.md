@@ -99,9 +99,14 @@ public:
 ```
 
 # Versions
+V1.2
+* add bit method to solve this problem quickly
+* change the file IO to stream(the std::cout and the fstream are the same)
+* implement the next step in the algorithm
+
 V1.1
 * add guess to successfully solve variaty of conditions   
-and the the step next the the above algoritm has not been implemented
+and the step next int the above algoritm has not been implemented
 
 V1.0
 * an example showing above 
