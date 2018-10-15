@@ -52,7 +52,7 @@ bool Sudoku::setContent(const string& content)
 		{
 			fin >> c;
 			if(c!='0')
-				bit[i][j] = 1<<(c-'0');
+				bit[i][j] = (1<<(c-'1'));
 		}
 	}
 
@@ -190,8 +190,8 @@ int Sudoku::choose(int row, int column)
 int Sudoku::bitCount(int x)
 {
 	x=x-((x>>1)&0x555);
-	x=x+((x>>2)&0x333);
-	x=x+((x>>4)&0xf0f);
+	x=(x&0x333)+((x>>2)&0x333);
+	x=(x+(x>>4))&0xf0f;
 	return x&0xf;
 }
 
