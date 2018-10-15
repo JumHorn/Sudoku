@@ -93,7 +93,10 @@ bool Sudoku::flushContent(const string& path)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			fout << bitCount(bit[i][j]-1)+1 << " ";
+			if(bitCount(bit[i][j])==1)
+				fout << bitCount(bit[i][j]-1)+1 << " ";
+			else
+				fout << 0 << " ";
 		}
 		fout << endl;
 	}
@@ -192,6 +195,7 @@ int Sudoku::bitCount(int x)
 	x=x-((x>>1)&0x555);
 	x=(x&0x333)+((x>>2)&0x333);
 	x=(x+(x>>4))&0xf0f;
+	x=x+(x>>8);
 	return x&0xf;
 }
 
@@ -242,7 +246,10 @@ ostream& operator<<(ostream& os,Sudoku& s)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			os << s.bitCount(s.bit[i][j]-1)+1 << " ";
+			if(s.bitCount(s.bit[i][j])==1)
+				os << s.bitCount(s.bit[i][j]-1)+1 << " ";
+			else
+				os << 0 << " ";
 		}
 		os << endl;
 	}
