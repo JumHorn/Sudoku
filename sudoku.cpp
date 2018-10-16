@@ -181,7 +181,7 @@ int Sudoku::choose(int row, int column)
 //this bit count solution is from java 
 //the difference is that java count 32bit integer 
 //and we only care about 9 bit integer
-int Sudoku::bitCount(int x)
+int Sudoku::bitCount(int x) const
 {
 	x=x-((x>>1)&0x555);
 	x=(x&0x333)+((x>>2)&0x333);

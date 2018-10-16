@@ -45,7 +45,7 @@ private:
 	bool guess(int i,int j);
 	bool guessCheck(int i,int j,int val);
 	void zeroBit(int row,int column,int number);
-	int bitCount(int x);
+	int bitCount(int x) const;
 	int numberCount();
 	int choose(int row,int column);
 
