@@ -112,7 +112,7 @@ int Sudoku::choose(int row, int column)
 {
 	for (int i = 0; i < 9; i++)
 	{
-		if((bit[row][column]&(1<<i))==1)
+		if((bit[row][column]&(1<<i))!=0)
 		{
 			//check row
 			int sum=0;
@@ -152,7 +152,46 @@ int Sudoku::choose(int row, int column)
 		}
 	}
 	//init algorithm's next condition
-	//
+	if(bitCount(bit[row][column])==2)
+	{
+		for(int i=0;i<9;i++)
+		{
+			if(bit[row][column]==bit[i][column]&&row!=i)
+			{
+				int number=bit[row][column];
+				for(int j=0;j<9;j++)
+				{
+					bit[j][column] &= ~number;
+				}
+				bit[row][column]=number;
+				bit[i][column]=number;
+				break;
+			}
+
+			if(bit[row][column]==bit[row][i]&&column!=i)
+			{
+				int number=bit[row][column];
+				for(int j=0;j<9;j++)
+				{
+					bit[row][j] &= ~number;
+				}
+				bit[row][column]=number;
+				bit[row][i]=number;
+				break;
+			}
+			if(bit[row][column]==bit[row-row%3+i/3][column-column%3+i%3]&&(row%3!=i/3||column%3!=i%3))
+			{
+				int number=bit[row][column];
+				for(int j=0;j<9;j++)
+				{
+					bit[row-row%3+j/3][column-column%3+j%3] &= ~number;
+				}
+				bit[row][column]=number;
+				bit[row-row%3+i/3][column-column%3+i%3]=number;
+				break;
+			}
+		}
+	}
 	return 1;
 }
 
