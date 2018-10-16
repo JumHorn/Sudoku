@@ -40,11 +40,11 @@ int main()
 		preresult=result;
 		result=s.calculate();
 		cout<<s;
+		cout<<result<<endl;
 		if(result==preresult||result==0)
 		{
 			break;
 		}
-		cout<<result<<endl;
 		c=getchar();
 	}
 	if(result!=0)
