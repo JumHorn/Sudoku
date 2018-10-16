@@ -38,27 +38,20 @@ Sudoku::~Sudoku()
 
 //read from a file which stores the numbers in it
 //9x9 and the unknows correspond to 0
-bool Sudoku::setContent(const string& content)
+void Sudoku::setContent(istream& is)
 {
-	ifstream fin(content);
-	if (!fin)
-	{
-		return false;
-	}
 	char c;
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 9; j++)
 		{
-			fin >> c;
+			is >> c;
 			if(c!='0')
 				bit[i][j] = (1<<(c-'1'));
 		}
 	}
 
 	numberCount();
-
-	return true;
 }
 
 //the algorithm to calculate the right number
@@ -86,21 +79,19 @@ int Sudoku::calculate()
 }
 
 //save the result to file
-bool Sudoku::flushContent(const string& path)
+void Sudoku::flushContent(ostream& os)
 {
-	ofstream fout(path);
 	for (int i = 0; i < 9; i++)
 	{
 		for (int j = 0; j < 9; j++)
 		{
 			if(bitCount(bit[i][j])==1)
-				fout << bitCount(bit[i][j]-1)+1 << " ";
+				os << bitCount(bit[i][j]-1)+1 << " ";
 			else
-				fout << 0 << " ";
+				os << 0 << " ";
 		}
-		fout << endl;
+		os << endl;
 	}
-	return true;
 }
 
 //when the right number is not zero
@@ -253,6 +244,5 @@ ostream& operator<<(ostream& os,Sudoku& s)
 		}
 		os << endl;
 	}
-	os << endl;
-	return os;
+	return os << endl;
 }

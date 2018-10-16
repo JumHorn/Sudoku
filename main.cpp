@@ -21,15 +21,16 @@ SOFTWARE.
 */
 
 #include<iostream>
+#include<fstream>
 #include"sudoku.h"
 using namespace std;
 
 int main()
 {
 	Sudoku s;
-
-	s.setContent("sudoku.txt");
-	cout<<s;
+	ifstream fin("sudoku.txt");
+	s.setContent(fin);
+	s.flushContent(std::cout);
 
 	char c='\n';
 	int result=0;
@@ -52,7 +53,8 @@ int main()
 		s.guess();
 		cout<<s;
 	}
-	s.flushContent("result.txt");
+	ofstream fout("result.txt");
+	s.flushContent(fout);
 
 	return 0;
 }

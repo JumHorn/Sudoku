@@ -36,8 +36,8 @@ public:
 
 	int calculate();
 	void guess();
-	bool setContent(const string& content);
-	bool flushContent(const string& path);
+	void setContent(istream& is);
+	void flushContent(ostream& os);
 
 private:
 	int bit[9][9];
