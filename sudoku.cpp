@@ -50,8 +50,6 @@ void Sudoku::setContent(istream& is)
 				bit[i][j] = (1<<(c-'1'));
 		}
 	}
-
-	numberCount();
 }
 
 //the algorithm to calculate the right number
@@ -106,28 +104,6 @@ void Sudoku::zeroBit(int row, int column, int number)
 		bit[row-row%3+i/3][column-column%3+i%3] &= ~number;
 	}
 	bit[row][column]=number;
-}
-
-//count all the unsure number in sudoku
-int Sudoku::numberCount()
-{
-	int result = 0;
-	for (int i = 0; i < 9; i++)
-	{
-		for (int j = 0; j < 9; j++)
-		{
-			if (bitCount(bit[i][j]) != 1)
-			{
-				result++;
-			}
-			else
-			{
-				//for zero initialization
-				zeroBit(i, j, bit[i][j]);
-			}
-		}
-	}
-	return result;
 }
 
 //if choosed one,return 0
