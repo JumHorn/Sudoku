@@ -146,7 +146,7 @@ int Sudoku::choose(int row, int column)
 			}
 			if(sum==1)
 			{
-				zeroBit(row,column,bit[row][column]);
+				zeroBit(row,column,1<<i);
 				return 0;
 			}
 
@@ -158,7 +158,7 @@ int Sudoku::choose(int row, int column)
 			}
 			if(sum==1)
 			{
-				zeroBit(row,column,bit[row][column]);
+				zeroBit(row,column,1<<i);
 				return 0;
 			}
 
@@ -170,7 +170,7 @@ int Sudoku::choose(int row, int column)
 			}
 			if(sum==1)
 			{
-				zeroBit(row,column,bit[row][column]);
+				zeroBit(row,column,1<<i);
 				return 0;
 			}
 		}
