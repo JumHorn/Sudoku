@@ -165,7 +165,6 @@ int Sudoku::choose(int row, int column)
 				}
 				bit[row][column]=number;
 				bit[i][column]=number;
-				break;
 			}
 
 			if(bit[row][column]==bit[row][i]&&column!=i)
@@ -177,8 +176,8 @@ int Sudoku::choose(int row, int column)
 				}
 				bit[row][column]=number;
 				bit[row][i]=number;
-				break;
 			}
+
 			if(bit[row][column]==bit[row-row%3+i/3][column-column%3+i%3]&&(row%3!=i/3||column%3!=i%3))
 			{
 				int number=bit[row][column];
@@ -188,7 +187,6 @@ int Sudoku::choose(int row, int column)
 				}
 				bit[row][column]=number;
 				bit[row-row%3+i/3][column-column%3+i%3]=number;
-				break;
 			}
 		}
 	}
