@@ -92,6 +92,7 @@ void Sudoku::flushContent(ostream& os)
 		}
 		os << endl;
 	}
+	os<<endl;
 }
 
 //when the right number is not zero
@@ -104,6 +105,7 @@ void Sudoku::zeroBit(int row, int column, int number)
 		bit[i][column] &= ~number;
 		bit[row-row%3+i/3][column-column%3+i%3] &= ~number;
 	}
+	bit[row][column]=number;
 }
 
 //count all the unsure number in sudoku
