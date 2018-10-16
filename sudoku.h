@@ -22,7 +22,7 @@ SOFTWARE.
 
 #ifndef _SUDOKU_H_
 #define _SUDOKU_H_
-#include<string>
+#include<iostream>
 using namespace std;
 
 //all the number was 1 bit in the right and possible number
